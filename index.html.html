@@ -1,0 +1,2345 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DailyBuzz News - தமிழ் & English News Portal</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&family=Noto+Sans+Tamil:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        :root {
+            --primary: #0a1628;
+            --primary-light: #1a2a4a;
+            --accent: #e63946;
+            --accent-hover: #c1121f;
+            --gold: #f4a261;
+            --text: #1a1a2e;
+            --text-light: #555;
+            --bg: #f0f2f5;
+            --card-bg: #ffffff;
+            --glass: rgba(255,255,255,0.15);
+            --glass-border: rgba(255,255,255,0.25);
+            --shadow: 0 8px 32px rgba(0,0,0,0.08);
+            --shadow-hover: 0 16px 48px rgba(0,0,0,0.15);
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            --gradient: linear-gradient(135deg, #0a1628 0%, #1a2a4a 100%);
+            --accent-gradient: linear-gradient(135deg, #e63946 0%, #c1121f 100%);
+        }
+
+        [data-theme="dark"] {
+            --primary: #0d1117;
+            --primary-light: #161b22;
+            --text: #e6edf3;
+            --text-light: #8b949e;
+            --bg: #0d1117;
+            --card-bg: #161b22;
+            --glass: rgba(22,27,34,0.8);
+            --glass-border: rgba(48,54,61,0.7);
+            --shadow: 0 8px 32px rgba(0,0,0,0.3);
+            --shadow-hover: 0 16px 48px rgba(0,0,0,0.5);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Poppins', 'Noto Sans Tamil', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            transition: var(--transition);
+            overflow-x: hidden;
+        }
+
+        /* ===== BREAKING NEWS TICKER ===== */
+        .ticker-wrap {
+            background: var(--accent);
+            color: #fff;
+            padding: 8px 0;
+            overflow: hidden;
+            position: relative;
+            z-index: 1000;
+        }
+
+        .ticker-wrap .ticker-label {
+            position: absolute;
+            left: 0;
+            top: 0;
+            background: #000;
+            color: var(--accent);
+            padding: 8px 16px;
+            font-weight: 700;
+            font-size: 0.75rem;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            z-index: 2;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .ticker-wrap .ticker-label::after {
+            content: '';
+            position: absolute;
+            right: -20px;
+            top: 0;
+            border-left: 20px solid #000;
+            border-top: 19px solid transparent;
+            border-bottom: 19px solid transparent;
+        }
+
+        .ticker {
+            display: flex;
+            animation: ticker 30s linear infinite;
+            padding-left: 180px;
+        }
+
+        .ticker-item {
+            white-space: nowrap;
+            padding: 0 40px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .ticker-item::before {
+            content: '●';
+            color: var(--gold);
+            font-size: 0.5rem;
+        }
+
+        @keyframes ticker {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+
+        /* ===== STICKY NAVBAR ===== */
+        .navbar {
+            background: var(--primary);
+            padding: 0;
+            position: sticky;
+            top: 0;
+            z-index: 999;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+            transition: var(--transition);
+        }
+
+        .navbar.scrolled {
+            padding: 0;
+            box-shadow: 0 4px 30px rgba(0,0,0,0.5);
+        }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 20px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+            padding: 12px 0;
+        }
+
+        .logo-icon {
+            width: 45px;
+            height: 45px;
+            background: var(--accent-gradient);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.3rem;
+            color: #fff;
+            font-weight: 900;
+            box-shadow: 0 4px 15px rgba(230,57,70,0.4);
+        }
+
+        .logo-text {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .logo-text .brand {
+            font-size: 1.4rem;
+            font-weight: 800;
+            color: #fff;
+            line-height: 1;
+            letter-spacing: -0.5px;
+        }
+
+        .logo-text .brand span {
+            color: var(--accent);
+        }
+
+        .logo-text .tagline {
+            font-size: 0.6rem;
+            color: var(--gold);
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            font-weight: 500;
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 0;
+            align-items: center;
+        }
+
+        .nav-menu li a {
+            color: rgba(255,255,255,0.8);
+            text-decoration: none;
+            font-size: 0.85rem;
+            font-weight: 500;
+            padding: 20px 14px;
+            display: block;
+            transition: var(--transition);
+            position: relative;
+            letter-spacing: 0.3px;
+        }
+
+        .nav-menu li a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 3px;
+            background: var(--accent);
+            transition: var(--transition);
+            border-radius: 3px 3px 0 0;
+        }
+
+        .nav-menu li a:hover {
+            color: #fff;
+            background: rgba(255,255,255,0.05);
+        }
+
+        .nav-menu li a:hover::after,
+        .nav-menu li a.active::after {
+            width: 70%;
+        }
+
+        .nav-menu li a.active {
+            color: var(--accent);
+        }
+
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .theme-toggle {
+            background: rgba(255,255,255,0.1);
+            border: none;
+            color: #fff;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1.1rem;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .theme-toggle:hover {
+            background: var(--accent);
+            transform: rotate(30deg);
+        }
+
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            gap: 5px;
+            padding: 10px;
+        }
+
+        .hamburger span {
+            width: 25px;
+            height: 2.5px;
+            background: #fff;
+            border-radius: 2px;
+            transition: var(--transition);
+        }
+
+        .hamburger.active span:nth-child(1) {
+            transform: rotate(45deg) translate(5px, 5px);
+        }
+
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .hamburger.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(5px, -5px);
+        }
+
+        /* ===== HERO BANNER ===== */
+        .hero {
+            position: relative;
+            height: 550px;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .hero-bg {
+            position: absolute;
+            inset: 0;
+            background: url('https://images.unsplash.com/photo-1504711434969-e33886168d6c?w=1600&q=80') center/cover no-repeat;
+            filter: brightness(0.4);
+            transform: scale(1.05);
+            animation: heroZoom 20s ease-in-out infinite alternate;
+        }
+
+        @keyframes heroZoom {
+            0% { transform: scale(1.05); }
+            100% { transform: scale(1.15); }
+        }
+
+        .hero-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(180deg, rgba(10,22,40,0.3) 0%, rgba(10,22,40,0.8) 100%);
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            padding: 0 20px;
+            max-width: 900px;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: var(--accent);
+            color: #fff;
+            padding: 8px 20px;
+            border-radius: 50px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 20px;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { box-shadow: 0 0 0 0 rgba(230,57,70,0.5); }
+            50% { box-shadow: 0 0 0 15px rgba(230,57,70,0); }
+        }
+
+        .hero-badge i {
+            animation: blink 1s infinite;
+        }
+
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.3; }
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            font-weight: 900;
+            color: #fff;
+            line-height: 1.1;
+            margin-bottom: 15px;
+            text-shadow: 0 4px 20px rgba(0,0,0,0.3);
+        }
+
+        .hero h1 span {
+            color: var(--accent);
+        }
+
+        .hero-datetime {
+            color: rgba(255,255,255,0.8);
+            font-size: 1rem;
+            font-weight: 400;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .hero-datetime span {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .hero-datetime i {
+            color: var(--gold);
+        }
+
+        /* ===== MAIN LAYOUT ===== */
+        .main-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 30px 20px;
+            display: grid;
+            grid-template-columns: 1fr 340px;
+            gap: 30px;
+        }
+
+        /* ===== SECTION HEADERS ===== */
+        .section-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 3px solid var(--accent);
+            position: relative;
+        }
+
+        .section-header::after {
+            content: '';
+            position: absolute;
+            bottom: -3px;
+            left: 0;
+            width: 60px;
+            height: 3px;
+            background: var(--gold);
+        }
+
+        .section-header h2 {
+            font-size: 1.6rem;
+            font-weight: 800;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .section-header h2 i {
+            color: var(--accent);
+        }
+
+        .section-header .view-all {
+            color: var(--accent);
+            text-decoration: none;
+            font-size: 0.85rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            transition: var(--transition);
+        }
+
+        .section-header .view-all:hover {
+            gap: 10px;
+        }
+
+        /* ===== CATEGORY FILTER ===== */
+        .category-filter {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 25px;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            padding: 8px 20px;
+            border: 2px solid var(--primary-light);
+            background: transparent;
+            color: var(--text);
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            font-weight: 600;
+            font-family: 'Poppins', sans-serif;
+            transition: var(--transition);
+            letter-spacing: 0.3px;
+        }
+
+        .filter-btn:hover,
+        .filter-btn.active {
+            background: var(--accent);
+            border-color: var(--accent);
+            color: #fff;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(230,57,70,0.3);
+        }
+
+        /* ===== NEWS CARDS ===== */
+        .news-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+
+        .news-card {
+            background: var(--card-bg);
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            position: relative;
+            animation: fadeInUp 0.6s ease forwards;
+            opacity: 0;
+        }
+
+        .news-card:nth-child(1) { animation-delay: 0.1s; }
+        .news-card:nth-child(2) { animation-delay: 0.2s; }
+        .news-card:nth-child(3) { animation-delay: 0.3s; }
+        .news-card:nth-child(4) { animation-delay: 0.4s; }
+        .news-card:nth-child(5) { animation-delay: 0.5s; }
+        .news-card:nth-child(6) { animation-delay: 0.6s; }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .news-card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .news-card .card-image {
+            position: relative;
+            height: 220px;
+            overflow: hidden;
+        }
+
+        .news-card .card-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .news-card:hover .card-image img {
+            transform: scale(1.1);
+        }
+
+        .card-image .category-tag {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            background: var(--accent);
+            color: #fff;
+            padding: 4px 14px;
+            border-radius: 50px;
+            font-size: 0.7rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            z-index: 2;
+        }
+
+        .card-image .category-tag.politics { background: #7b2cbf; }
+        .card-image .category-tag.sports { background: #2d6a4f; }
+        .card-image .category-tag.entertainment { background: #e76f51; }
+        .card-image .category-tag.technology { background: #0077b6; }
+        .card-image .category-tag.business { background: #f4a261; color: #333; }
+        .card-image .category-tag.health { background: #06d6a0; color: #333; }
+        .card-image .category-tag.ipl { background: #1e3a5f; }
+        .card-image .category-tag.cinema { background: #c1121f; }
+
+        .card-content {
+            padding: 20px;
+        }
+
+        .card-content .card-meta {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 10px;
+            font-size: 0.75rem;
+            color: var(--text-light);
+        }
+
+        .card-content .card-meta span {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .card-content .card-meta i {
+            color: var(--accent);
+            font-size: 0.7rem;
+        }
+
+        .card-content h3 {
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 6px;
+            line-height: 1.3;
+            transition: var(--transition);
+        }
+
+        .card-content h3:hover {
+            color: var(--accent);
+        }
+
+        .card-content .tamil-title {
+            font-family: 'Noto Sans Tamil', sans-serif;
+            font-size: 0.9rem;
+            color: var(--text-light);
+            margin-bottom: 10px;
+            line-height: 1.5;
+            font-weight: 500;
+        }
+
+        .card-content p {
+            font-size: 0.85rem;
+            color: var(--text-light);
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+
+        .read-more {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            color: var(--accent);
+            text-decoration: none;
+            font-size: 0.85rem;
+            font-weight: 600;
+            transition: var(--transition);
+        }
+
+        .read-more:hover {
+            gap: 12px;
+            color: var(--accent-hover);
+        }
+
+        /* ===== FEATURED CARD ===== */
+        .featured-card {
+            grid-column: 1 / -1;
+            display: grid;
+            grid-template-columns: 1.2fr 1fr;
+            background: var(--card-bg);
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            margin-bottom: 10px;
+        }
+
+        .featured-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .featured-card .card-image {
+            height: 100%;
+            min-height: 350px;
+        }
+
+        .featured-card .card-content {
+            padding: 30px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .featured-card .card-content h3 {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+        }
+
+        .featured-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            background: var(--gold);
+            color: #333;
+            padding: 4px 12px;
+            border-radius: 50px;
+            font-size: 0.7rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 12px;
+            width: fit-content;
+        }
+
+        /* ===== SIDEBAR ===== */
+        .sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+        }
+
+        .sidebar-widget {
+            background: var(--card-bg);
+            border-radius: 16px;
+            padding: 25px;
+            box-shadow: var(--shadow);
+            position: sticky;
+            top: 80px;
+            transition: var(--transition);
+        }
+
+        .sidebar-widget .widget-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            padding-bottom: 12px;
+            border-bottom: 2px solid var(--accent);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .sidebar-widget .widget-title i {
+            color: var(--accent);
+        }
+
+        /* Search Widget */
+        .search-box {
+            position: relative;
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 12px 45px 12px 16px;
+            border: 2px solid rgba(0,0,0,0.1);
+            border-radius: 12px;
+            font-size: 0.9rem;
+            font-family: 'Poppins', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            transition: var(--transition);
+            outline: none;
+        }
+
+        .search-box input:focus {
+            border-color: var(--accent);
+            box-shadow: 0 0 0 4px rgba(230,57,70,0.1);
+        }
+
+        .search-box button {
+            position: absolute;
+            right: 5px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: var(--accent);
+            border: none;
+            color: #fff;
+            width: 36px;
+            height: 36px;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .search-box button:hover {
+            background: var(--accent-hover);
+        }
+
+        /* Trending Widget */
+        .trending-item {
+            display: flex;
+            gap: 15px;
+            padding: 15px 0;
+            border-bottom: 1px solid rgba(0,0,0,0.06);
+            transition: var(--transition);
+            cursor: pointer;
+        }
+
+        .trending-item:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+
+        .trending-item:hover {
+            transform: translateX(5px);
+        }
+
+        .trending-number {
+            font-size: 1.8rem;
+            font-weight: 900;
+            color: var(--accent);
+            line-height: 1;
+            min-width: 35px;
+        }
+
+        .trending-info h4 {
+            font-size: 0.85rem;
+            font-weight: 600;
+            line-height: 1.3;
+            margin-bottom: 4px;
+        }
+
+        .trending-info .trending-meta {
+            font-size: 0.7rem;
+            color: var(--text-light);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .trending-info .trending-meta i {
+            color: var(--accent);
+        }
+
+        /* Social Widget */
+        .social-links {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+
+        .social-link {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 14px;
+            border-radius: 10px;
+            color: #fff;
+            text-decoration: none;
+            font-size: 0.8rem;
+            font-weight: 600;
+            transition: var(--transition);
+        }
+
+        .social-link:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .social-link.facebook { background: #1877f2; }
+        .social-link.twitter { background: #1da1f2; }
+        .social-link.youtube { background: #ff0000; }
+        .social-link.instagram { background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888); }
+        .social-link.telegram { background: #0088cc; }
+        .social-link.whatsapp { background: #25d366; }
+
+        /* ===== IPL SECTION ===== */
+        .ipl-section {
+            background: linear-gradient(135deg, #1e3a5f 0%, #0a1628 100%);
+            padding: 50px 0;
+            margin: 40px 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .ipl-section::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -10%;
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, rgba(230,57,70,0.15) 0%, transparent 70%);
+            border-radius: 50%;
+        }
+
+        .ipl-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .ipl-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 35px;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .ipl-header h2 {
+            font-size: 2rem;
+            font-weight: 900;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .ipl-header h2 i {
+            color: var(--gold);
+            font-size: 2.2rem;
+        }
+
+        .ipl-header .live-badge {
+            background: var(--accent);
+            color: #fff;
+            padding: 6px 18px;
+            border-radius: 50px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            animation: pulse 2s infinite;
+        }
+
+        /* Upcoming Match */
+        .upcoming-match {
+            background: rgba(255,255,255,0.08);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.12);
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 35px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 20px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .upcoming-match::before {
+            content: 'UPCOMING MATCH';
+            position: absolute;
+            top: 12px;
+            left: 20px;
+            font-size: 0.65rem;
+            font-weight: 700;
+            color: var(--gold);
+            letter-spacing: 2px;
+        }
+
+        .match-team {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            flex: 1;
+            min-width: 180px;
+        }
+
+        .match-team.right {
+            flex-direction: row-reverse;
+            text-align: right;
+        }
+
+        .team-logo {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: 900;
+            color: #fff;
+            flex-shrink: 0;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+        }
+
+        .team-logo.csk { background: linear-gradient(135deg, #f9cd05, #e8a800); color: #333; }
+        .team-logo.mi { background: linear-gradient(135deg, #004ba0, #003366); }
+        .team-logo.rcb { background: linear-gradient(135deg, #ec1c24, #b71c1c); }
+        .team-logo.kkr { background: linear-gradient(135deg, #3a225d, #1a0a3e); }
+
+        .team-info h4 {
+            color: #fff;
+            font-size: 1rem;
+            font-weight: 700;
+        }
+
+        .team-info p {
+            color: rgba(255,255,255,0.6);
+            font-size: 0.75rem;
+        }
+
+        .match-vs {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .match-vs .vs-text {
+            font-size: 1.5rem;
+            font-weight: 900;
+            color: var(--gold);
+        }
+
+        .match-vs .match-date {
+            color: rgba(255,255,255,0.7);
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+
+        .match-vs .match-venue {
+            color: rgba(255,255,255,0.5);
+            font-size: 0.7rem;
+        }
+
+        /* Points Table */
+        .points-table {
+            background: rgba(255,255,255,0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 16px;
+            overflow: hidden;
+        }
+
+        .points-table table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .points-table th {
+            background: rgba(230,57,70,0.3);
+            color: #fff;
+            padding: 14px 16px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            text-align: left;
+        }
+
+        .points-table td {
+            padding: 14px 16px;
+            color: rgba(255,255,255,0.85);
+            font-size: 0.85rem;
+            border-bottom: 1px solid rgba(255,255,255,0.06);
+        }
+
+        .points-table tr:hover td {
+            background: rgba(255,255,255,0.05);
+        }
+
+        .points-table .team-cell {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 600;
+        }
+
+        .points-table .team-cell .mini-logo {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.6rem;
+            font-weight: 900;
+            color: #fff;
+        }
+
+        /* ===== CINEMA SECTION ===== */
+        .cinema-section {
+            padding: 50px 0;
+            margin: 20px 0;
+        }
+
+        .cinema-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .cinema-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 25px;
+        }
+
+        .cinema-card {
+            background: var(--card-bg);
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+
+        .cinema-card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .cinema-card .card-image {
+            height: 200px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .cinema-card .card-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .cinema-card:hover .card-image img {
+            transform: scale(1.1);
+        }
+
+        .cinema-card .card-image .rating {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            background: rgba(0,0,0,0.7);
+            color: var(--gold);
+            padding: 4px 10px;
+            border-radius: 8px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .cinema-card .card-content {
+            padding: 18px;
+        }
+
+        .cinema-card .card-content .genre-tag {
+            display: inline-block;
+            background: rgba(230,57,70,0.1);
+            color: var(--accent);
+            padding: 3px 10px;
+            border-radius: 50px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .cinema-card .card-content h3 {
+            font-size: 1rem;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+
+        .cinema-card .card-content .tamil-title {
+            font-family: 'Noto Sans Tamil', sans-serif;
+            font-size: 0.8rem;
+            color: var(--text-light);
+            margin-bottom: 8px;
+        }
+
+        .cinema-card .card-content p {
+            font-size: 0.8rem;
+            color: var(--text-light);
+            line-height: 1.5;
+        }
+
+        /* ===== FOOTER ===== */
+        .footer {
+            background: var(--gradient);
+            color: rgba(255,255,255,0.8);
+            padding: 60px 0 0;
+        }
+
+        .footer-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: grid;
+            grid-template-columns: 1.5fr 1fr 1fr 1.2fr;
+            gap: 40px;
+        }
+
+        .footer-col h3 {
+            color: #fff;
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        .footer-col h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 40px;
+            height: 3px;
+            background: var(--accent);
+            border-radius: 3px;
+        }
+
+        .footer-about p {
+            font-size: 0.85rem;
+            line-height: 1.7;
+            margin-bottom: 20px;
+        }
+
+        .footer-social {
+            display: flex;
+            gap: 10px;
+        }
+
+        .footer-social a {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            background: rgba(255,255,255,0.1);
+            color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .footer-social a:hover {
+            background: var(--accent);
+            transform: translateY(-3px);
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 10px;
+        }
+
+        .footer-links li a {
+            color: rgba(255,255,255,0.7);
+            text-decoration: none;
+            font-size: 0.85rem;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .footer-links li a:hover {
+            color: var(--accent);
+            padding-left: 5px;
+        }
+
+        .footer-links li a i {
+            font-size: 0.6rem;
+            color: var(--accent);
+        }
+
+        .footer-newsletter p {
+            font-size: 0.85rem;
+            margin-bottom: 15px;
+        }
+
+        .newsletter-form {
+            display: flex;
+            gap: 8px;
+        }
+
+        .newsletter-form input {
+            flex: 1;
+            padding: 12px 16px;
+            border: 2px solid rgba(255,255,255,0.15);
+            border-radius: 10px;
+            background: rgba(255,255,255,0.05);
+            color: #fff;
+            font-family: 'Poppins', sans-serif;
+            font-size: 0.85rem;
+            outline: none;
+            transition: var(--transition);
+        }
+
+        .newsletter-form input:focus {
+            border-color: var(--accent);
+        }
+
+        .newsletter-form input::placeholder {
+            color: rgba(255,255,255,0.4);
+        }
+
+        .newsletter-form button {
+            padding: 12px 20px;
+            background: var(--accent);
+            color: #fff;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: 700;
+            font-family: 'Poppins', sans-serif;
+            transition: var(--transition);
+        }
+
+        .newsletter-form button:hover {
+            background: var(--accent-hover);
+        }
+
+        .footer-contact li {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            margin-bottom: 12px;
+            font-size: 0.85rem;
+        }
+
+        .footer-contact li i {
+            color: var(--accent);
+            margin-top: 3px;
+        }
+
+        .footer-bottom {
+            margin-top: 40px;
+            padding: 20px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            text-align: center;
+            font-size: 0.8rem;
+            color: rgba(255,255,255,0.5);
+        }
+
+        .footer-bottom a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+
+        /* ===== SCROLL TO TOP ===== */
+        .scroll-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 50px;
+            height: 50px;
+            background: var(--accent);
+            color: #fff;
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 5px 20px rgba(230,57,70,0.4);
+            transition: var(--transition);
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(20px);
+            z-index: 999;
+        }
+
+        .scroll-top.visible {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .scroll-top:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 30px rgba(230,57,70,0.5);
+        }
+
+        /* ===== LOADING ANIMATION ===== */
+        .loading-overlay {
+            position: fixed;
+            inset: 0;
+            background: var(--primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 10000;
+            transition: opacity 0.5s ease, visibility 0.5s ease;
+        }
+
+        .loading-overlay.hidden {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .loader {
+            text-align: center;
+        }
+
+        .loader-spinner {
+            width: 60px;
+            height: 60px;
+            border: 4px solid rgba(255,255,255,0.1);
+            border-top-color: var(--accent);
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+            margin: 0 auto 15px;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .loader p {
+            color: rgba(255,255,255,0.6);
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 1024px) {
+            .main-container {
+                grid-template-columns: 1fr;
+            }
+
+            .sidebar {
+                display: grid;
+                grid-template-columns: repeat(2, 1fr);
+                gap: 20px;
+            }
+
+            .sidebar-widget {
+                position: static;
+            }
+
+            .featured-card {
+                grid-template-columns: 1fr;
+            }
+
+            .featured-card .card-image {
+                min-height: 250px;
+            }
+
+            .footer-container {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hamburger {
+                display: flex;
+            }
+
+            .nav-menu {
+                position: fixed;
+                top: 0;
+                right: -100%;
+                width: 280px;
+                height: 100vh;
+                background: var(--primary);
+                flex-direction: column;
+                padding: 80px 20px 20px;
+                transition: var(--transition);
+                box-shadow: -5px 0 30px rgba(0,0,0,0.3);
+                z-index: 1001;
+            }
+
+            .nav-menu.active {
+                right: 0;
+            }
+
+            .nav-menu li a {
+                padding: 14px 16px;
+                border-bottom: 1px solid rgba(255,255,255,0.05);
+                width: 100%;
+            }
+
+            .nav-menu li a::after {
+                display: none;
+            }
+
+            .mobile-overlay {
+                display: none;
+                position: fixed;
+                inset: 0;
+                background: rgba(0,0,0,0.5);
+                z-index: 1000;
+            }
+
+            .mobile-overlay.active {
+                display: block;
+            }
+
+            .hero {
+                height: 400px;
+            }
+
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .news-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .sidebar {
+                grid-template-columns: 1fr;
+            }
+
+            .footer-container {
+                grid-template-columns: 1fr;
+            }
+
+            .upcoming-match {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .match-team, .match-team.right {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .cinema-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .ipl-header h2 {
+                font-size: 1.5rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero h1 {
+                font-size: 1.6rem;
+            }
+
+            .hero-datetime {
+                font-size: 0.8rem;
+            }
+
+            .section-header h2 {
+                font-size: 1.2rem;
+            }
+
+            .category-filter {
+                gap: 6px;
+            }
+
+            .filter-btn {
+                padding: 6px 14px;
+                font-size: 0.7rem;
+            }
+
+            .social-links {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* ===== ANIMATIONS ===== */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* ===== NO RESULTS ===== */
+        .no-results {
+            text-align: center;
+            padding: 60px 20px;
+            color: var(--text-light);
+        }
+
+        .no-results i {
+            font-size: 3rem;
+            color: var(--accent);
+            margin-bottom: 15px;
+        }
+
+        .no-results h3 {
+            font-size: 1.2rem;
+            margin-bottom: 8px;
+        }
+
+        .no-results p {
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Loading Overlay -->
+    <div class="loading-overlay" id="loader">
+        <div class="loader">
+            <div class="loader-spinner"></div>
+            <p>Loading DailyBuzz News...</p>
+        </div>
+    </div>
+
+    <!-- Breaking News Ticker -->
+    <div class="ticker-wrap">
+        <div class="ticker-label"><i class="fas fa-bolt"></i> BREAKING</div>
+        <div class="ticker" id="ticker">
+            <span class="ticker-item">TN Election 2026: Major Alliances Formed Across Tamil Nadu | தமிழ்நாடு தேர்தல் 2026: முக்கிய கூட்டணிகள் உருவாகின்றன</span>
+            <span class="ticker-item">IPL 2026 Season Kicks Off with Record Viewership | ஐபிஎல் 2026 சீசன் தொடங்கியது</span>
+            <span class="ticker-item">Global Summit 2026: World Leaders Gather in Geneva | உலக summit 2026: உலக தலைவர்கள் ஜெனிவாவில்</span>
+            <span class="ticker-item">New Tamil Blockbuster Movie Breaks Box Office Records | புதிய தமிழ் திரைப்படம் பாக்ஸ் ஆபிஸ் சாதனை</span>
+            <span class="ticker-item">Technology Giants Announce AI Partnership | தொழில்நுட்ப நிறுவனங்கள் AI கூட்டணி அறிவிப்பு</span>
+            <span class="ticker-item">TN Election 2026: Major Alliances Formed Across Tamil Nadu | தமிழ்நாடு தேர்தல் 2026: முக்கிய கூட்டணிகள் உருவாகின்றன</span>
+            <span class="ticker-item">IPL 2026 Season Kicks Off with Record Viewership | ஐபிஎல் 2026 சீசன் தொடங்கியது</span>
+            <span class="ticker-item">Global Summit 2026: World Leaders Gather in Geneva | உலக summit 2026: உலக தலைவர்கள் ஜெனிவாவில்</span>
+            <span class="ticker-item">New Tamil Blockbuster Movie Breaks Box Office Records | புதிய தமிழ் திரைப்படம் பாக்ஸ் ஆபிஸ் சாதனை</span>
+            <span class="ticker-item">Technology Giants Announce AI Partnership | தொழில்நுட்ப நிறுவனங்கள் AI கூட்டணி அறிவிப்பு</span>
+        </div>
+    </div>
+
+    <!-- Sticky Navbar -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <a href="#" class="logo">
+                <div class="logo-icon">DB</div>
+                <div class="logo-text">
+                    <span class="brand">Daily<span>Buzz</span></span>
+                    <span class="tagline">News Portal</span>
+                </div>
+            </a>
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="#" class="active" data-section="home">Home</a></li>
+                <li><a href="#latest" data-section="latest">Latest</a></li>
+                <li><a href="#trending" data-section="trending">Trending</a></li>
+                <li><a href="#ipl" data-section="ipl">IPL</a></li>
+                <li><a href="#cinema" data-section="cinema">Cinema</a></li>
+                <li><a href="#politics" data-section="politics">Politics</a></li>
+                <li><a href="#technology" data-section="technology">Technology</a></li>
+                <li><a href="#about" data-section="about">About</a></li>
+                <li><a href="#contact" data-section="contact">Contact</a></li>
+            </ul>
+            <div class="nav-right">
+                <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode">
+                    <i class="fas fa-moon"></i>
+                </button>
+                <div class="hamburger" id="hamburger">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </div>
+        </div>
+    </nav>
+    <div class="mobile-overlay" id="mobileOverlay"></div>
+
+    <!-- Hero Banner -->
+    <header class="hero" id="home">
+        <div class="hero-bg"></div>
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+            <div class="hero-badge"><i class="fas fa-circle"></i> Breaking News</div>
+            <h1>Stay Informed with <span>DailyBuzz</span> News</h1>
+            <div class="hero-datetime">
+                <span><i class="fas fa-calendar-alt"></i> <span id="currentDate"></span></span>
+                <span><i class="fas fa-clock"></i> <span id="currentTime"></span></span>
+                <span><i class="fas fa-map-marker-alt"></i> Chennai, India</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <div class="main-container">
+        <main>
+            <!-- Category Filter -->
+            <div class="category-filter" id="categoryFilter">
+                <button class="filter-btn active" data-category="all">All</button>
+                <button class="filter-btn" data-category="politics">Politics</button>
+                <button class="filter-btn" data-category="sports">Sports</button>
+                <button class="filter-btn" data-category="entertainment">Entertainment</button>
+                <button class="filter-btn" data-category="technology">Technology</button>
+                <button class="filter-btn" data-category="business">Business</button>
+                <button class="filter-btn" data-category="health">Health</button>
+            </div>
+
+            <!-- Featured Article -->
+            <div class="featured-card fade-in" data-category="politics" id="latest">
+                <div class="card-image">
+                    <img src="https://images.unsplash.com/photo-1529107386315-e1a2ed48a620?w=800&q=80" alt="TN Election">
+                </div>
+                <div class="card-content">
+                    <div class="featured-badge"><i class="fas fa-star"></i> Featured Story</div>
+                    <div class="card-meta">
+                        <span><i class="fas fa-tag"></i> Politics</span>
+                        <span><i class="fas fa-clock"></i> 2 hours ago</span>
+                        <span><i class="fas fa-eye"></i> 15.2K views</span>
+                    </div>
+                    <h3>TN Election 2026: Major Alliances Formed — A New Political Landscape Emerges</h3>
+                    <p class="tamil-title">தமிழ்நாடு தேர்தல் 2026: முக்கிய கூட்டணிகள் உருவாகின்றன — புதிய அரசியல் நிலப்பரப்பு</p>
+                    <p>As the 2026 Tamil Nadu Legislative Assembly elections approach, major political parties have announced significant alliance shifts that could reshape the state's political landscape. With new coalitions forming and strategic partnerships emerging, voters are witnessing an unprecedented political scenario.</p>
+                    <a href="#" class="read-more">Read Full Story <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+
+            <!-- Latest News Grid -->
+            <div class="section-header" id="trending">
+                <h2><i class="fas fa-fire"></i> Latest & Trending News</h2>
+                <a href="#" class="view-all">View All <i class="fas fa-arrow-right"></i></a>
+            </div>
+
+            <div class="news-grid" id="newsGrid">
+                <!-- Card 1 -->
+                <div class="news-card" data-category="politics">
+                    <div class="card-image">
+                        <img src="https://images.unsplash.com/photo-1540910419892-4a36d2c3266c?w=600&q=80" alt="Political Rally">
+                        <span class="category-tag politics">Politics</span>
+                    </div>
+                    <div class="card-content">
+                        <div class="card-meta">
+                            <span><i class="fas fa-clock"></i> 3h ago</span>
+                            <span><i class="fas fa-comments"></i> 234</span>
+                        </div>
+                        <h3>Chief Minister Announces New Welfare Schemes for Rural Development</h3>
+                        <p class="tamil-title">முதல்வர் கிராமப்புற மேம்பாட்டுக்கான புதிய நலத்திட்டங்களை அறிவித்தார்</p>
+                        <p>The state government unveiled a comprehensive package of welfare schemes aimed at improving rural infrastructure, healthcare access, and educational facilities across Tamil Nadu.</p>
+                        <a href="#" class="read-more">Read More <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+
+                <!-- Card 2 -->
+                <div class="news-card" data-category="international">
+                    <div class="card-image">
+                        <img src="https://images.unsplash.com/photo-1551836022-deb4988cc6c0?w=600&q=80" alt="Global Summit">
+                        <span class="category-tag">International</span>
+                    </div>
+                    <div class="card-content">
+                        <div class="card-meta">
+                            <span><i class="fas fa-clock"></i> 5h ago</span>
+                            <span><i class="fas fa-comments"></i> 189</span>
+                        </div>
+                        <h3>Global Climate Summit 2026: India Leads Renewable Energy Initiative</h3>
+                        <p class="tamil-title">உலக காலநிலை summit 2026: இந்தியா புதுப்பிக்கத்தக்க எரிசக்தி முன்னெடுப்புக்கு தலைமை</p>
+                        <p>Indian representatives at the Global Climate Summit announced ambitious renewable energy targets, positioning the nation as a leader in sustainable development.</p>
+                        <a href="#" class="read-more">Read More <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+
+                <!-- Card 3 -->
+                <div class="news-card" data-category="technology">
+                    <div class="card-image">
+                        <img src="https://images.unsplash.com/photo-1677442136019-21780ecad995?w=600&q=80" alt="AI Technology">
+                        <span class="category-tag technology">Technology</span>
+                    </div>
+                    <div class="card-content">
+                        <div class="card-meta">
+                            <span><i class="fas fa-clock"></i> 6h ago</span>
+                            <span><i class="fas fa-comments"></i> 412</span>
+                        </div>
+                        <h3>AI Revolution: How Artificial Intelligence is Transforming Tamil Nadu's IT Sector</h3>
+                        <p class="tamil-title">AI புரட்சி: செயற்கை நுண்ணறிவு தமிழ்நாட்டின் ஐடி துறையை எப்படி மாற்றுகிறது</p>
+                        <p>Tamil Nadu's booming IT sector is embracing artificial intelligence at an unprecedented pace, with major companies investing billions in AI research and development centers.</p>
+                        <a href="#" class="read-more">Read More <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+
+                <!-- Card 4 -->
+                <div class="news-card" data-category="sports" id="ipl">
+                    <div class="card-image">
+                        <img src="https://images.unsplash.com/photo-1531415074968-036ba1b575da?w=600&q=80" alt="IPL Cricket">
+                        <span class="category-tag ipl">IPL 2026</span>
+                    </div>
+                    <div class="card-content">
+                        <div class="card-meta">
+                            <span><i class="fas fa-clock"></i> 4h ago</span>
+                            <span><i class="fas fa-comments"></i> 1.2K</span>
+                        </div>
+                        <h3>IPL 2026: Chennai Super Kings Announce Star-Studded Squad</h3>
+                        <p class="tamil-title">ஐபிஎல் 2026: சென்னை சூப்பர் கிங்ஸ் நட்சத்திர அணியை அறிவித்தது</p>
+                        <p>CSK has assembled a formidable squad for the upcoming IPL season, with key signings that have fans excited about the team's championship prospects.</p>
+                        <a href="#" class="read-more">Read More <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+
+                <!-- Card 5 -->
+                <div class="news-card" data-category="entertainment" id="cinema">
+                    <div class="card-image">
+                        <img src="https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?w=600&q=80" alt="Cinema">
+                        <span class="category-tag cinema">Cinema</span>
+                    </div>
+                    <div class="card-content">
+                        <div class="card-meta">
+                            <span><i class="fas fa-clock"></i> 7h ago</span>
+                            <span><i class="fas fa-comments"></i> 567</span>
+                        </div>
+                        <h3>New Tamil Blockbuster Announced: Pan-India Release Planned</h3>
+                        <p class="tamil-title">புதிய தமிழ் பிளாக்பஸ்டர் அறிவிப்பு: பான்-இந்தியா வெளியீடு திட்டமிடப்பட்டது</p>
+                        <p>A major Tamil film production house has announced an ambitious pan-India release for their upcoming magnum opus, featuring top stars and cutting-edge VFX.</p>
+                        <a href="#" class="read-more">Read More <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+
+                <!-- Card 6 -->
+                <div class="news-card" data-category="business">
+                    <div class="card-image">
+                        <img src="https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=600&q=80" alt="Stock Market">
+                        <span class="category-tag business">Business</span>
+                    </div>
+                    <div class="card-content">
+                        <div class="card-meta">
+                            <span><i class="fas fa-clock"></i> 8h ago</span>
+                            <span><i class="fas fa-comments"></i> 89</span>
+                        </div>
+                        <h3>Indian Stock Market Hits All-Time High — Sensex Crosses 85,000 Mark</h3>
+                        <p class="tamil-title">இந்திய பங்கு சந்தை எல்லா நேர உச்சத்தை தொட்டது — சென்செக்ஸ் 85,000 ஐ தாண்டியது</p>
+                        <p>The Bombay Stock Exchange's benchmark index Sensex has surged past the 85,000 mark for the first time, driven by strong corporate earnings and foreign investments.</p>
+                        <a href="#" class="read-more">Read More <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+
+                <!-- Card 7 -->
+                <div class="news-card" data-category="health">
+                    <div class="card-image">
+                        <img src="https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=600&q=80" alt="Health">
+                        <span class="category-tag health">Health</span>
+                    </div>
+                    <div class="card-content">
+                        <div class="card-meta">
+                            <span><i class="fas fa-clock"></i> 10h ago</span>
+                            <span><i class="fas fa-comments"></i> 156</span>
+                        </div>
+                        <h3>Tamil Nadu Launches Universal Health Coverage Program for All Citizens</h3>
+                        <p class="tamil-title">தமிழ்நாடு அனைத்து குடிமக்களுக்கும் பொது சுகாதார காப்பீட்டு திட்டத்தை தொடங்கியது</p>
+                        <p>The state government has launched a pioneering universal health coverage program that will provide free healthcare access to all residents of Tamil Nadu.</p>
+                        <a href="#" class="read-more">Read More <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+
+                <!-- Card 8 -->
+                <div class="news-card" data-category="international">
+                    <div class="card-image">
+                        <img src="https://images.unsplash.com/photo-1526666923127-b2970f64b422?w=600&q=80" alt="International News">
+                        <span class="category-tag">International</span>
+                    </div>
+                    <div class="card-content">
+                        <div class="card-meta">
+                            <span><i class="fas fa-clock"></i> 12h ago</span>
+                            <span><i class="fas fa-comments"></i> 298</span>
+                        </div>
+                        <h3>UN General Assembly: India's Speech on Global Peace Receives Standing Ovation</h3>
+                        <p class="tamil-title">ஐநா பொதுச்சபை: உலக அமைதி குறித்த இந்தியாவின் உரைக்கு நிற்கும் கைதட்டல்</p>
+                        <p>India's address at the UN General Assembly focusing on global peace, sustainable development, and multilateral cooperation received widespread acclaim from world leaders.</p>
+                        <a href="#" class="read-more">Read More <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+
+                <!-- Card 9 -->
+                <div class="news-card" data-category="politics" id="politics">
+                    <div class="card-image">
+                        <img src="https://images.unsplash.com/photo-1577415124269-fc1140815901?w=600&q=80" alt="Parliament">
+                        <span class="category-tag politics">Politics</span>
+                    </div>
+                    <div class="card-content">
+                        <div class="card-meta">
+                            <span><i class="fas fa-clock"></i> 14h ago</span>
+                            <span><i class="fas fa-comments"></i> 445</span>
+                        </div>
+                        <h3>Parliament Session: Opposition Demands Debate on Inflation and Unemployment</h3>
+                        <p class="tamil-title">நாடாளுமன்ற அமர்வு: பணவீக்கம் மற்றும் வேலையின்மை மீது விவாதம் கோரும் எதிர்க்கட்சி</p>
+                        <p>The opposition parties have intensified their demands for a comprehensive debate on rising inflation and unemployment rates in the ongoing Parliament session.</p>
+                        <a href="#" class="read-more">Read More <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- No Results Message -->
+            <div class="no-results" id="noResults" style="display: none;">
+                <i class="fas fa-search"></i>
+                <h3>No articles found</h3>
+                <p>Try adjusting your search or filter criteria</p>
+            </div>
+        </main>
+
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <!-- Search Widget -->
+            <div class="sidebar-widget">
+                <div class="widget-title"><i class="fas fa-search"></i> Search News</div>
+                <div class="search-box">
+                    <input type="text" id="searchInput" placeholder="Search news...">
+                    <button aria-label="Search"><i class="fas fa-search"></i></button>
+                </div>
+            </div>
+
+            <!-- Trending Widget -->
+            <div class="sidebar-widget" id="trendingWidget">
+                <div class="widget-title"><i class="fas fa-chart-line"></i> Trending Now</div>
+                <div class="trending-item">
+                    <div class="trending-number">01</div>
+                    <div class="trending-info">
+                        <h4>TN Election 2026: Major Alliance Shifts</h4>
+                        <div class="trending-meta"><i class="fas fa-eye"></i> 25.4K views</div>
+                    </div>
+                </div>
+                <div class="trending-item">
+                    <div class="trending-number">02</div>
+                    <div class="trending-info">
+                        <h4>IPL 2026: CSK vs MI — Clash of Titans</h4>
+                        <div class="trending-meta"><i class="fas fa-eye"></i> 18.7K views</div>
+                    </div>
+                </div>
+                <div class="trending-item">
+                    <div class="trending-number">03</div>
+                    <div class="trending-info">
+                        <h4>New Tamil Film Breaks Opening Day Records</h4>
+                        <div class="trending-meta"><i class="fas fa-eye"></i> 15.2K views</div>
+                    </div>
+                </div>
+                <div class="trending-item">
+                    <div class="trending-number">04</div>
+                    <div class="trending-info">
+                        <h4>AI Startups in Chennai Raise $2B Funding</h4>
+                        <div class="trending-meta"><i class="fas fa-eye"></i> 12.1K views</div>
+                    </div>
+                </div>
+                <div class="trending-item">
+                    <div class="trending-number">05</div>
+                    <div class="trending-info">
+                        <h4>Sensex Crosses 85K for the First Time</h4>
+                        <div class="trending-meta"><i class="fas fa-eye"></i> 9.8K views</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Social Widget -->
+            <div class="sidebar-widget">
+                <div class="widget-title"><i class="fas fa-share-alt"></i> Follow Us</div>
+                <div class="social-links">
+                    <a href="#" class="social-link facebook"><i class="fab fa-facebook-f"></i> 1.2M</a>
+                    <a href="#" class="social-link twitter"><i class="fab fa-x-twitter"></i> 890K</a>
+                    <a href="#" class="social-link youtube"><i class="fab fa-youtube"></i> 2.1M</a>
+                    <a href="#" class="social-link instagram"><i class="fab fa-instagram"></i> 1.5M</a>
+                    <a href="#" class="social-link telegram"><i class="fab fa-telegram-plane"></i> 500K</a>
+                    <a href="#" class="social-link whatsapp"><i class="fab fa-whatsapp"></i> Join</a>
+                </div>
+            </div>
+        </aside>
+    </div>
+
+    <!-- IPL Section -->
+    <section class="ipl-section">
+        <div class="ipl-container">
+            <div class="ipl-header">
+                <h2><i class="fas fa-cricket"></i> IPL 2026</h2>
+                <div class="live-badge"><i class="fas fa-circle" style="font-size:0.5rem"></i> LIVE UPDATES</div>
+            </div>
+
+            <!-- Upcoming Match -->
+            <div class="upcoming-match fade-in">
+                <div class="match-team">
+                    <div class="team-logo csk">CSK</div>
+                    <div class="team-info">
+                        <h4>Chennai Super Kings</h4>
+                        <p>Whistle Podu!</p>
+                    </div>
+                </div>
+                <div class="match-vs">
+                    <div class="vs-text">VS</div>
+                    <div class="match-date">April 5, 2026 • 7:30 PM IST</div>
+                    <div class="match-venue">M.A. Chidambaram Stadium, Chennai</div>
+                </div>
+                <div class="match-team right">
+                    <div class="team-logo mi">MI</div>
+                    <div class="team-info">
+                        <h4>Mumbai Indians</h4>
+                        <p>One Family</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Points Table -->
+            <div class="points-table fade-in">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Pos</th>
+                            <th>Team</th>
+                            <th>Played</th>
+                            <th>Won</th>
+                            <th>Lost</th>
+                            <th>NRR</th>
+                            <th>Points</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>1</td>
+                            <td><div class="team-cell"><div class="mini-logo csk">CSK</div> Chennai Super Kings</div></td>
+                            <td>6</td>
+                            <td>5</td>
+                            <td>1</td>
+                            <td>+0.892</td>
+                            <td><strong>10</strong></td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td><div class="team-cell"><div class="mini-logo rcb">RCB</div> Royal Challengers Bengaluru</div></td>
+                            <td>6</td>
+                            <td>4</td>
+                            <td>2</td>
+                            <td>+0.645</td>
+                            <td><strong>8</strong></td>
+                        </tr>
+                        <tr>
+                            <td>3</td>
+                            <td><div class="team-cell"><div class="mini-logo kkr">KKR</div> Kolkata Knight Riders</div></td>
+                            <td>6</td>
+                            <td>4</td>
+                            <td>2</td>
+                            <td>+0.312</td>
+                            <td><strong>8</strong></td>
+                        </tr>
+                        <tr>
+                            <td>4</td>
+                            <td><div class="team-cell"><div class="mini-logo mi">MI</div> Mumbai Indians</div></td>
+                            <td>6</td>
+                            <td>3</td>
+                            <td>3</td>
+                            <td>+0.158</td>
+                            <td><strong>6</strong></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <!-- Cinema Section -->
+    <section class="cinema-section">
+        <div class="cinema-container">
+            <div class="section-header">
+                <h2><i class="fas fa-film"></i> Cinema News</h2>
+                <a href="#" class="view-all">View All <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="cinema-grid">
+                <div class="cinema-card fade-in">
+                    <div class="card-image">
+                        <img src="https://images.unsplash.com/photo-1536440136628-849c177e76a1?w=600&q=80" alt="Kollywood">
+                        <div class="rating"><i class="fas fa-star"></i> 8.5</div>
+                    </div>
+                    <div class="card-content">
+                        <span class="genre-tag">Kollywood</span>
+                        <h3>Vijay's Next Film: First Look Poster Revealed</h3>
+                        <p class="tamil-title">விஜய்யின் அடுத்த படம்: முதல் பார்வை போஸ்டர் வெளியானது</p>
+                        <p>The highly anticipated first look of Vijay's upcoming film has been released, sending fans into a frenzy on social media.</p>
+                    </div>
+                </div>
+                <div class="cinema-card fade-in">
+                    <div class="card-image">
+                        <img src="https://images.unsplash.com/photo-1594909122845-11baa439b7bf?w=600&q=80" alt="Bollywood">
+                        <div class="rating"><i class="fas fa-star"></i> 7.8</div>
+                    </div>
+                    <div class="card-content">
+                        <span class="genre-tag">Bollywood</span>
+                        <h3>Bollywood's Big Budget Epic: Shooting Begins in Rajasthan</h3>
+                        <p class="tamil-title">பாலிவுட்டின் பெரிய பட்ஜெட் எபிக்: ராஜஸ்தானில் படப்பிடிப்பு தொடங்கியது</p>
+                        <p>One of Bollywood's most ambitious projects has commenced shooting with grand sets built in the deserts of Rajasthan.</p>
+                    </div>
+                </div>
+                <div class="cinema-card fade-in">
+                    <div class="card-image">
+                        <img src="https://images.unsplash.com/photo-1440404653325-ab127d49abc1?w=600&q=80" alt="Hollywood">
+                        <div class="rating"><i class="fas fa-star"></i> 9.1</div>
+                    </div>
+                    <div class="card-content">
+                        <span class="genre-tag">Hollywood</span>
+                        <h3>Hollywood Sci-Fi Blockbuster Breaks Opening Weekend Records</h3>
+                        <p class="tamil-title">ஹாலிவுட் சயின்ஸ் பிக்ஷன் பிளாக்பஸ்டர் தொடக்க வார இறுதி சாதனை</p>
+                        <p>The latest Hollywood sci-fi epic has shattered opening weekend box office records worldwide, earning over $500 million.</p>
+                    </div>
+                </div>
+                <div class="cinema-card fade-in">
+                    <div class="card-image">
+                        <img src="https://images.unsplash.com/photo-1517604931442-7e0c8ed2963c?w=600&q=80" alt="Celebrity">
+                        <div class="rating"><i class="fas fa-star"></i> 7.2</div>
+                    </div>
+                    <div class="card-content">
+                        <span class="genre-tag">Celebrity</span>
+                        <h3>Rajinikanth's Health Update: Actor Discharged from Hospital</h3>
+                        <p class="tamil-title">ரஜினிகாந்த் உடல்நலம்: நடிகர் மருத்துவமனையிலிருந்து டிஸ்சார்ஜ்</p>
+                        <p>Superstar Rajinikanth has been discharged from the hospital after successful treatment and is recovering well at home.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer" id="contact">
+        <div class="footer-container">
+            <div class="footer-col footer-about">
+                <h3>DailyBuzz News</h3>
+                <p>DailyBuzz News is Tamil Nadu's leading bilingual news portal, delivering the latest updates in English and Tamil. Trusted by millions for accurate, timely, and comprehensive news coverage across politics, sports, cinema, technology, and more.</p>
+                <div class="footer-social">
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-x-twitter"></i></a>
+                    <a href="#"><i class="fab fa-youtube"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-telegram-plane"></i></a>
+                </div>
+            </div>
+            <div class="footer-col">
+                <h3>Quick Links</h3>
+                <ul class="footer-links">
+                    <li><a href="#"><i class="fas fa-chevron-right"></i> Home</a></li>
+                    <li><a href="#"><i class="fas fa-chevron-right"></i> Latest News</a></li>
+                    <li><a href="#"><i class="fas fa-chevron-right"></i> Trending</a></li>
+                    <li><a href="#"><i class="fas fa-chevron-right"></i> IPL 2026</a></li>
+                    <li><a href="#"><i class="fas fa-chevron-right"></i> Cinema News</a></li>
+                    <li><a href="#"><i class="fas fa-chevron-right"></i> Technology</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h3>Categories</h3>
+                <ul class="footer-links">
+                    <li><a href="#"><i class="fas fa-chevron-right"></i> Politics</a></li>
+                    <li><a href="#"><i class="fas fa-chevron-right"></i> Sports</a></li>
+                    <li><a href="#"><i class="fas fa-chevron-right"></i> Entertainment</a></li>
+                    <li><a href="#"><i class="fas fa-chevron-right"></i> Business</a></li>
+                    <li><a href="#"><i class="fas fa-chevron-right"></i> Health</a></li>
+                    <li><a href="#"><i class="fas fa-chevron-right"></i> International</a></li>
+                </ul>
+            </div>
+            <div class="footer-col footer-newsletter">
+                <h3>Newsletter</h3>
+                <p>Subscribe to get the latest news delivered directly to your inbox. Stay updated with DailyBuzz!</p>
+                <form class="newsletter-form" onsubmit="handleNewsletter(event)">
+                    <input type="email" placeholder="Enter your email" required>
+                    <button type="submit">Subscribe</button>
+                </form>
+                <ul class="footer-links footer-contact" style="margin-top: 25px;">
+                    <li><i class="fas fa-envelope"></i> contact@dailybuzz.news</li>
+                    <li><i class="fas fa-phone"></i> +91 44 2345 6789</li>
+                    <li><i class="fas fa-map-marker-alt"></i> Anna Salai, Chennai, Tamil Nadu 600002</li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 <a href="#">DailyBuzz News</a>. All rights reserved. | Designed with ❤️ for Tamil Nadu & Beyond</p>
+        </div>
+    </footer>
+
+    <!-- Scroll to Top -->
+    <button class="scroll-top" id="scrollTop" aria-label="Scroll to top">
+        <i class="fas fa-chevron-up"></i>
+    </button>
+
+    <script>
+        // ===== LOADING SCREEN =====
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                document.getElementById('loader').classList.add('hidden');
+            }, 1200);
+        });
+
+        // ===== DYNAMIC DATE & TIME =====
+        function updateDateTime() {
+            const now = new Date();
+            const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+            const dateStr = now.toLocaleDateString('en-IN', options);
+            const timeStr = now.toLocaleTimeString('en-IN', { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: true });
+            
+            document.getElementById('currentDate').textContent = dateStr;
+            document.getElementById('currentTime').textContent = timeStr;
+        }
+        
+        updateDateTime();
+        setInterval(updateDateTime, 1000);
+
+        // ===== DARK MODE TOGGLE =====
+        const themeToggle = document.getElementById('themeToggle');
+        const themeIcon = themeToggle.querySelector('i');
+        
+        // Check saved theme
+        if (localStorage.getItem('theme') === 'dark') {
+            document.documentElement.setAttribute('data-theme', 'dark');
+            themeIcon.className = 'fas fa-sun';
+        }
+
+        themeToggle.addEventListener('click', () => {
+            const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+            if (isDark) {
+                document.documentElement.removeAttribute('data-theme');
+                themeIcon.className = 'fas fa-moon';
+                localStorage.setItem('theme', 'light');
+            } else {
+                document.documentElement.setAttribute('data-theme', 'dark');
+                themeIcon.className = 'fas fa-sun';
+                localStorage.setItem('theme', 'dark');
+            }
+        });
+
+        // ===== MOBILE MENU =====
+        const hamburger = document.getElementById('hamburger');
+        const navMenu = document.getElementById('navMenu');
+        const mobileOverlay = document.getElementById('mobileOverlay');
+
+        hamburger.addEventListener('click', () => {
+            hamburger.classList.toggle('active');
+            navMenu.classList.toggle('active');
+            mobileOverlay.classList.toggle('active');
+        });
+
+        mobileOverlay.addEventListener('click', () => {
+            hamburger.classList.remove('active');
+            navMenu.classList.remove('active');
+            mobileOverlay.classList.remove('active');
+        });
+
+        // Close menu on link click
+        navMenu.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                hamburger.classList.remove('active');
+                navMenu.classList.remove('active');
+                mobileOverlay.classList.remove('active');
+            });
+        });
+
+        // ===== STICKY NAVBAR SCROLL EFFECT =====
+        const navbar = document.getElementById('navbar');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+
+        // ===== SCROLL TO TOP =====
+        const scrollTopBtn = document.getElementById('scrollTop');
+        
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 500) {
+                scrollTopBtn.classList.add('visible');
+            } else {
+                scrollTopBtn.classList.remove('visible');
+            }
+        });
+
+        scrollTopBtn.addEventListener('click', () => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+
+        // ===== CATEGORY FILTER =====
+        const filterBtns = document.querySelectorAll('.filter-btn');
+        const newsCards = document.querySelectorAll('.news-card');
+        const noResults = document.getElementById('noResults');
+
+        filterBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                // Update active button
+                filterBtns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+
+                const category = btn.getAttribute('data-category');
+                let visibleCount = 0;
+
+                newsCards.forEach((card, index) => {
+                    const cardCategory = card.getAttribute('data-category');
+                    
+                    if (category === 'all' || cardCategory === category || (category === 'sports' && cardCategory === 'ipl') || (category === 'entertainment' && cardCategory === 'cinema')) {
+                        card.style.display = '';
+                        card.style.animation = `fadeInUp 0.5s ease ${index * 0.1}s forwards`;
+                        visibleCount++;
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+
+                noResults.style.display = visibleCount === 0 ? 'block' : 'none';
+            });
+        });
+
+        // ===== LIVE SEARCH =====
+        const searchInput = document.getElementById('searchInput');
+
+        searchInput.addEventListener('input', (e) => {
+            const query = e.target.value.toLowerCase().trim();
+            let visibleCount = 0;
+
+            newsCards.forEach((card, index) => {
+                const title = card.querySelector('h3').textContent.toLowerCase();
+                const tamil = card.querySelector('.tamil-title') ? card.querySelector('.tamil-title').textContent.toLowerCase() : '';
+                const desc = card.querySelector('p') ? card.querySelector('p').textContent.toLowerCase() : '';
+
+                if (title.includes(query) || tamil.includes(query) || desc.includes(query) || query === '') {
+                    card.style.display = '';
+                    card.style.animation = `fadeInUp 0.5s ease ${index * 0.1}s forwards`;
+                    visibleCount++;
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+
+            noResults.style.display = visibleCount === 0 ? 'block' : 'none';
+
+            // Reset category filter
+            if (query === '') {
+                filterBtns.forEach(b => b.classList.remove('active'));
+                filterBtns[0].classList.add('active');
+            }
+        });
+
+        // ===== INTERSECTION OBSERVER FOR ANIMATIONS =====
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.fade-in').forEach(el => {
+            observer.observe(el);
+        });
+
+        // ===== ACTIVE NAV LINK ON SCROLL =====
+        const sections = document.querySelectorAll('section[id], header[id]');
+        const navLinks = document.querySelectorAll('.nav-menu a');
+
+        window.addEventListener('scroll', () => {
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop - 100;
+                if (window.scrollY >= sectionTop) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('data-section') === current) {
+                    link.classList.add('active');
+                }
+            });
+        });
+
+        // ===== NEWSLETTER HANDLER =====
+        function handleNewsletter(e) {
+            e.preventDefault();
+            const input = e.target.querySelector('input');
+            const email = input.value;
+            
+            // Simple feedback
+            const btn = e.target.querySelector('button');
+            const originalText = btn.textContent;
+            btn.textContent = '✓ Subscribed!';
+            btn.style.background = '#2d6a4f';
+            input.value = '';
+            
+            setTimeout(() => {
+                btn.textContent = originalText;
+                btn.style.background = '';
+            }, 3000);
+        }
+
+        // ===== TICKER DUPLICATION FOR SEAMLESS LOOP =====
+        const ticker = document.getElementById('ticker');
+        const tickerItems = ticker.innerHTML;
+        ticker.innerHTML += tickerItems; // Duplicate for seamless loop
+    </script>
+</body>
+</html>
